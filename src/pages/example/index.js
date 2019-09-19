@@ -60,13 +60,12 @@ export default class ExamplePage extends Component {
             {loading ? "获取中..." : "获取通知列表"}
           </button>
           {notices.length > 0 && (
-            <a
-              href="javascript:;"
+            <button
               onClick={this.clearNotices}
               style={{ marginLeft: 10 }}
             >
               清空
-            </a>
+            </button>
           )}
         </div>
         <div>
