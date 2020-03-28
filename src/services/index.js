@@ -11,6 +11,8 @@ function createService(apiOpts) {
     if (DEV) {
       // eslint-disable-next-line no-console
       console.log(`${name} ${new Date()}`);
+      // eslint-disable-next-line no-console
+      console.log(`params: `, params);
     }
 
     return request({

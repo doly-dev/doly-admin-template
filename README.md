@@ -1,6 +1,8 @@
-# doly-admin-template
+# doly-simple-template
 
-> 适用于开发后台管理平台项目，构建工具使用 [doly-cli](https://github.com/doly-dev/doly-cli#readme) 。
+> 适用于开发简单web项目，构建工具使用 [doly-cli](https://github.com/doly-dev/doly-cli#readme) 。
+> 
+> 如果要制定自己的业务脚手架，可以基于它进行修改。
 
 
 
@@ -27,7 +29,7 @@
 │   ├── utils                # 工具
 │   ├── app.js               # 入口 JS
 │   ├── router.config.js     # 路由配置
-│   ├── index.html           # html页面
+│   ├── document.ejs         # html页面
 ├── doly.config.js           # doly 配置
 ├── package.json
 ├── README.md

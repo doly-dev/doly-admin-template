@@ -1,41 +1,38 @@
 import "~/utils/polyfill";
-import "~/assets/css/common.less";
 
 import React from "react";
 import ReactDom from "react-dom";
-import {
-  HashRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-  Link
-} from "react-router-dom";
-
+import { Router, Route, Redirect, Switch } from "react-router-dom";
+import { syncHistory } from "router-store";
+import useLogin from "~/hooks/useLogin";
+import BasicLayout from "~/layouts/BasicLayout";
+import BlankLayout from "~/layouts/BlankLayout";
 import routerConfig from "~/router.config";
 
+const history = syncHistory();
+
 function App() {
+  const { isLogin } = useLogin();
   return (
-    <Router>
-      <>
-        <h1>Doly</h1>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/example">Example</Link>
-          </li>
-          <li>
-            <Link to="/nomatch">NotFound</Link>
-          </li>
-        </ul>
-        <Switch>
-          {routerConfig.map(page => (
-            <Route key={`page_${page.name}`} {...page} />
-          ))}
-          <Redirect to="/404" />
-        </Switch>
-      </>
+    <Router history={history}>
+      <Switch>
+        <Route
+          path="/user"
+          render={props => (
+            <BlankLayout routes={routerConfig.blank} {...props} />
+          )}
+        />
+        <Route
+          path="/"
+          render={props =>
+            isLogin() ? (
+              <BasicLayout routes={routerConfig.basic} {...props} />
+            ) : (
+              <Redirect to="/user/login" />
+            )
+          }
+        />
+      </Switch>
     </Router>
   );
 }

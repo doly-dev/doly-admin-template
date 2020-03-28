@@ -13,11 +13,6 @@ const apiConfig = {
     name: "登录",
     url: "/api/login",
     method: "post"
-  },
-  getNotices: {
-    name: "获取通知列表",
-    url: "/api/notices",
-    method: "get"
   }
 };
 
