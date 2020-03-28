@@ -6,8 +6,8 @@ import Exception from "~/components/Exception";
 const Exception403 = props => (
   <Exception
     type="403"
-    // linkElement={Link}
-    // backText="返回首页"
+    linkElement={Link}
+    backText="返回首页"
     actions={
       <>
         <Button onClick={() => props.history.goBack()}>返回上一页</Button>

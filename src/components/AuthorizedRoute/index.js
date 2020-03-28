@@ -1,11 +1,16 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import Exception from "../Exception";
 import { checkAuthorized } from "~/utils/authorized";
 
 // 不能访问的页面显示403
 const Exception403 = () => (
-  <Exception type="403" style={{ minHeight: 500, height: "80%" }} />
+  <Exception
+    type="403"
+    linkElement={Link}
+    backText="返回首页"
+    style={{ minHeight: 500, height: "80%" }}
+  />
 );
 
 export default function AuthorizedRoute({
