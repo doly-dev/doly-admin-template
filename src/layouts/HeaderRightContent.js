@@ -1,6 +1,6 @@
 import React from "react";
 import { Dropdown, Menu, message } from "antd";
-import NoticeIcon from "./NoticeIcon";
+// import NoticeIcon from "./NoticeIcon";
 import styles from "./BasicLayout.less";
 
 import { getLoginInfo, logout } from "~/utils/login";
@@ -24,7 +24,7 @@ export default function HeaderRightContent() {
 
   return (
     <div className={styles.headerRightContent}>
-      <NoticeIcon />
+      {/* <NoticeIcon /> */}
       <Dropdown overlay={DropdownMenu}>
         <a>{`欢迎您，${username}`}</a>
       </Dropdown>
