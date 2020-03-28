@@ -11,6 +11,13 @@ import routerConfig from "~/router.config";
 
 const history = syncHistory();
 
+// // 用于打包示例
+// window.sessionStorage.setItem('__login_info__', JSON.stringify({
+//   username: "guest",
+//   token: "guest12343",
+//   currentAuthority: ["user"]
+// }));
+
 function App() {
   const { isLogin } = useLogin();
   return (

@@ -4,9 +4,7 @@ import PageHeaderWrapper from "~/components/PageHeaderWrapper";
 export default () => {
   return (
     <PageHeaderWrapper>
-      <div style={{ textAlign: "center", minHeight: "120vh" }}>
-        欢迎使用 Doly Admin。
-      </div>
+      <div style={{ minHeight: "50vh" }}>Welcome to use Doly Admin.</div>
     </PageHeaderWrapper>
   );
 };

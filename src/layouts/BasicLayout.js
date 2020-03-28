@@ -6,6 +6,7 @@ import Header from "./Header";
 import HeaderRightContent from "./HeaderRightContent";
 import Footer from "./Footer";
 import Sider from "./Sider";
+import RouteContext from "./RouteContext";
 import SiderMenu from "~/components/SiderMenu";
 import { getRoutes, getPageTitle } from "./_utils";
 import routerConfig from "~/router.config";
@@ -27,41 +28,52 @@ export default function BasicLayout({
   const [collapsed, setCollapsed] = useState(false); // 侧边栏当前收起状态
   const menuData = useMemo(() => getMenuData(routerConfig.basic), []);
   const routeData = useMemo(() => getRoutes(routes, true), []);
+  const pageTitle = getPageTitle({ routeData, ...restProps });
 
   return (
     <>
       <HelmetProvider>
         <Helmet>
-          <title>{getPageTitle({ title, menuData, ...restProps })}</title>
+          <title>{pageTitle ? `${pageTitle} - ${title}` : title}</title>
         </Helmet>
       </HelmetProvider>
-      <Layout>
-        <Header
-          title={title}
-          logo={logo}
-          defaultCollapsed={collapsed}
-          collapsible={collapsible}
-          onTrigger={() => setCollapsed(c => !c)}
-          renderRightContent={() => <HeaderRightContent />}
-        />
+      <RouteContext.Provider
+        value={{
+          ...restProps,
+          menuData,
+          routeData,
+          title: pageTitle,
+          collapsed
+        }}
+      >
         <Layout>
-          <Sider collapsed={collapsed} collapsible={collapsible}>
-            <SiderMenu menuData={menuData} {...restProps} />
-          </Sider>
-          <Layout
-            className={styles.rightLayout}
-            style={collapsed ? { marginLeft: 80 } : {}}
-          >
-            <Content className={styles.content}>
-              <Switch>
-                {routeData}
-                <Redirect to="/exception/404" />
-              </Switch>
-            </Content>
-            <Footer copyright={copyright} />
+          <Header
+            title={title}
+            logo={logo}
+            defaultCollapsed={collapsed}
+            collapsible={collapsible}
+            onTrigger={() => setCollapsed(c => !c)}
+            renderRightContent={() => <HeaderRightContent />}
+          />
+          <Layout>
+            <Sider collapsed={collapsed} collapsible={collapsible}>
+              <SiderMenu menuData={menuData} {...restProps} />
+            </Sider>
+            <Layout
+              className={styles.rightLayout}
+              style={collapsed ? { marginLeft: 80 } : {}}
+            >
+              <Content className={styles.content}>
+                <Switch>
+                  {routeData}
+                  <Redirect to="/exception/404" />
+                </Switch>
+              </Content>
+              <Footer copyright={copyright} />
+            </Layout>
           </Layout>
         </Layout>
-      </Layout>
+      </RouteContext.Provider>
     </>
   );
 }

@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { PageHeader } from "antd";
+import RouteContext from "~/layouts/RouteContext";
+import { getBreadcrumb } from "~/layouts/_utils";
 
 import styles from "./style.less";
 
+// 自定义渲染，父级路由没有页面功能
+function itemRender(route) {
+  return <span>{route.breadcrumbName}</span>;
+}
+
 export default function PageHeaderWrapper({ children, ...restProps }) {
+  const { location, routeData, title } = useContext(RouteContext);
+  const routes = getBreadcrumb(routeData, location.pathname);
+  const breadcrumb =
+    routes.length > 1
+      ? {
+          routes,
+          itemRender
+        }
+      : {};
+
   return (
-    <>
-      <PageHeader {...restProps} />
+    <div className={styles.wrapper}>
+      <PageHeader title={title} breadcrumb={breadcrumb} {...restProps} />
       <div className={styles.content}>{children}</div>
-    </>
+    </div>
   );
 }

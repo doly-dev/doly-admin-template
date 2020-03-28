@@ -1,19 +1,8 @@
-# doly-simple-template
+# doly-admin-template
 
-> 适用于开发简单web项目，构建工具使用 [doly-cli](https://github.com/doly-dev/doly-cli#readme) 。
-> 
-> 如果要制定自己的业务脚手架，可以基于它进行修改。
+基于 [doly-cli](https://github.com/doly-dev/doly-cli#readme) 开发的管理平台脚手架。
 
-
-
-**默认集成以下模块**
-
-- [axios](https://github.com/axios/axios) - 请求
-- [react-router-dom](https://github.com/ReactTraining/react-router) - 路由
-- [eslint-config-doly-react](https://github.com/doly-dev/eslint-config-doly/tree/master/packages/eslint-config-doly-react) - 代码检查
-- [prettier-config-doly](https://github.com/doly-dev/prettier-config-doly) - 代码风格
-
-`pre-commit` 会执行代码检查，可以在 `.eslintrc` 文件扩展或重写规则。参考 [ESLint Rules](http://eslint.cn/docs/rules/#stylistic-issues)、[Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+文档补充中，敬请期待！
 
 ## 目录结构
 

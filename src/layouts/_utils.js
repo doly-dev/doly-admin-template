@@ -4,29 +4,42 @@ import pathToRegexp from "path-to-regexp";
 import AuthorizedRoute from "~/components/AuthorizedRoute";
 import { isUrl } from "~/utils/utils";
 
-function formatter(data = [], parentPath = "/") {
+// 格式化路由path
+function formatPath(path, parentPath = "/") {
+  let ret = path;
+  if (!isUrl(path) && path.indexOf("/") !== 0) {
+    ret = parentPath + path;
+  }
+
+  return ret;
+}
+
+// 格式化路由，处理path和breakcrumb
+function formatter(data = [], parentPath = "/", breakcrumb = []) {
   let ret = [];
 
   data.forEach(item => {
-    let { path } = item;
-    if (!isUrl(path) && path.indexOf("/") !== 0) {
-      path = parentPath + path;
-    }
+    const pathFmt = formatPath(item.path, parentPath);
+    const currentBreakcrumb = breakcrumb.slice();
+
+    currentBreakcrumb.push({
+      path: item.path,
+      breadcrumbName: item.name || ""
+    });
 
     if (item.routes) {
-      ret = ret.concat(formatter(item.routes, `${path}/`));
+      ret = ret.concat(
+        formatter(item.routes, `${pathFmt}/`, currentBreakcrumb)
+      );
     } else {
       const result = {
         ...item,
-        path
+        breakcrumb: currentBreakcrumb,
+        path: pathFmt
       };
 
-      if (
-        item.redirect &&
-        !isUrl(item.redirect) &&
-        item.redirect.indexOf("/") !== 0
-      ) {
-        result.redirect = parentPath + item.redirect;
+      if (item.redirect) {
+        result.redirect = formatPath(item.redirect, parentPath);
       }
 
       ret.push(result);
@@ -36,6 +49,7 @@ function formatter(data = [], parentPath = "/") {
   return ret;
 }
 
+// 获取路由数据
 export function getRoutes(routeData, needAuthorized) {
   const ret = [];
   const routes = formatter(routeData);
@@ -75,14 +89,12 @@ export function getRoutes(routeData, needAuthorized) {
 }
 
 // 获取当前route信息
-function getCurrentRoute(menuData, pathname) {
+export function getCurrentRoute(routeData, pathname) {
   let currentRoute = null;
 
-  menuData.some(item => {
-    if (item.children) {
-      currentRoute = getCurrentRoute(item.children, pathname);
-    } else if (pathToRegexp(item.path).test(pathname)) {
-      currentRoute = item;
+  routeData.some(item => {
+    if (pathToRegexp(item.key).test(pathname)) {
+      currentRoute = item.props;
     }
     return currentRoute;
   });
@@ -91,12 +103,19 @@ function getCurrentRoute(menuData, pathname) {
 }
 
 // 获取页面标题
-export function getPageTitle({ title, menuData, location }) {
+// 这里如果根据菜单获取标题会有问题，比如有些详情页的菜单是隐藏。
+export function getPageTitle({ routeData, location }) {
   const { pathname } = location;
-  let pageTitle = title;
-  const currRoute = getCurrentRoute(menuData, pathname);
+  let title = "";
+  const currRoute = getCurrentRoute(routeData, pathname);
   if (currRoute && currRoute.name) {
-    pageTitle = `${currRoute.name} - ${title}`;
+    title = currRoute.name;
   }
-  return pageTitle;
+  return title;
+}
+
+// 获取面包屑数据
+export function getBreadcrumb(routeData, pathname) {
+  const currRoute = getCurrentRoute(routeData, pathname);
+  return currRoute.breakcrumb;
 }
