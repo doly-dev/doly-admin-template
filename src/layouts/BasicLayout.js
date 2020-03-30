@@ -19,7 +19,7 @@ const { Content } = Layout;
 export default function BasicLayout({
   title = "",
   logo = "", // logo图片
-  collapsible = true, // 是否可收起
+  collapsible = false, // 是否可收起
   copyright = `Copyright&nbsp;&nbsp;Doly 2020`, // 底部版权信息，String | ReactNode
   routes = [],
   ...restProps
