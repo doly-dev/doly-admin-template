@@ -29,9 +29,9 @@ export default function DefineHeader({
   logo = "",
   title = "",
   renderRightContent = () => null,
-  style = {}
+  className = {}
 }) {
-  const headerStyle = classnames([styles.header, style]);
+  const headerStyle = classnames([styles.header, className]);
 
   const [collapsedType, setCollapsedType] = useState(collapsed);
 

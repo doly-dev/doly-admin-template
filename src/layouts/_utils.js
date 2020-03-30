@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import pathToRegexp from "path-to-regexp";
+import { isUrl } from "util-helpers";
 import AuthorizedRoute from "~/components/AuthorizedRoute";
-import { isUrl } from "~/utils/utils";
 
 // 格式化路由path
 function formatPath(path, parentPath = "/") {

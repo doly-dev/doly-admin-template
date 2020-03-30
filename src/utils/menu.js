@@ -1,4 +1,4 @@
-import { isUrl } from "./utils";
+import { isUrl } from "util-helpers";
 import { checkAuthorized } from "./authorized";
 
 function formatter(data = [], parentPath = "/") {

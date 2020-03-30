@@ -1,22 +1,33 @@
 import React, { useEffect, useCallback } from "react";
 import { Card, Form, Input, Button } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
-import useLogin from "~/hooks/useLogin";
+import { useAsync } from "rc-hooks";
+import services from "~/services";
+import { setLoginInfo, isLogin } from "~/utils/login";
+import { setAuthorized } from "~/utils/authorized";
+
 import styles from "./style.less";
 
 const FormItem = Form.Item;
 
 export default ({ history }) => {
-  const { isLogin, loading, login } = useLogin();
+  const { run, loading } = useAsync(services.login, {
+    autoRun: false,
+    onSuccess: res => {
+      setLoginInfo(res.data); // 缓存登录信息
+      setAuthorized(res.data.currentAuthority); // 缓存权限
+      history.push("/");
+    }
+  });
 
   useEffect(() => {
     if (isLogin()) {
       history.push("/");
     }
-  }, [loading]);
+  }, []);
 
   const onFinish = useCallback(values => {
-    login({
+    run({
       data: values
     });
   }, []);

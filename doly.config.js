@@ -39,6 +39,14 @@ module.exports = {
         camel2DashComponentName: false
       },
       "rc-hooks"
+    ],
+    [
+      "import",
+      {
+        libraryName: "util-helpers",
+        camel2DashComponentName: false
+      },
+      "util-helpers"
     ]
   ],
 

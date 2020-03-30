@@ -1,5 +1,3 @@
-// TODO：
-// 缺少length
 const memoryData = {};
 const memoryStorage = {
   // eslint-disable-next-line

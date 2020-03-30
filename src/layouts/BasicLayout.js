@@ -11,16 +11,15 @@ import SiderMenu from "~/components/SiderMenu";
 import { getRoutes, getPageTitle } from "./_utils";
 import routerConfig from "~/router.config";
 import { getMenuData } from "~/utils/menu";
-import piclogo from "~/assets/images/logo@2x.png";
 
 import styles from "./BasicLayout.less";
 
 const { Content } = Layout;
 
 export default function BasicLayout({
-  title = "Doly Admin",
-  logo = piclogo, // logo图片
-  collapsible = false, // 是否可收起
+  title = "",
+  logo = "", // logo图片
+  collapsible = true, // 是否可收起
   copyright = `Copyright&nbsp;&nbsp;Doly 2020`, // 底部版权信息，String | ReactNode
   routes = [],
   ...restProps
