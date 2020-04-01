@@ -36,6 +36,11 @@ export function checkAuthorized(authority) {
   // 当前权限
   const currentAuthority = getAuthorized();
 
+  // 相等，用于数字、字符串
+  if (authority === currentAuthority) {
+    return true;
+  }
+
   // 数组处理
   if (Array.isArray(authority)) {
     if (authority.indexOf(currentAuthority) >= 0) {

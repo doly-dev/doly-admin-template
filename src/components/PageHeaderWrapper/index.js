@@ -23,7 +23,12 @@ export default function PageHeaderWrapper({ children, ...restProps }) {
 
   return (
     <div className={styles.wrapper}>
-      <PageHeader title={title} breadcrumb={breadcrumb} {...restProps} />
+      <PageHeader
+        ghost={false}
+        title={title}
+        breadcrumb={breadcrumb}
+        {...restProps}
+      />
       <div className={styles.content}>{children}</div>
     </div>
   );
