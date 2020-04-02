@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Layout, Affix } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -29,18 +29,17 @@ export default function DefineHeader({
   logo = "",
   title = "",
   renderRightContent = () => null,
-  className = {}
+  className = {},
+  isMobile = false
 }) {
   const headerStyle = classnames([styles.header, className]);
-
-  const [collapsedType, setCollapsedType] = useState(collapsed);
 
   const view = (
     <Header className={headerStyle}>
       <Link
         to="/"
         className={styles.logo}
-        style={!collapsedType ? {} : { width: 80 }}
+        style={!collapsed && (!isMobile || !collapsible) ? {} : { width: 80 }}
       >
         {logo ? (
           <div className={styles.logoImageWrapper}>
@@ -53,11 +52,10 @@ export default function DefineHeader({
         <span
           className={styles.trigger}
           onClick={() => {
-            setCollapsedType(x => !x);
-            onTrigger(collapsedType);
+            onTrigger(!collapsed);
           }}
         >
-          {collapsedType ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </span>
       ) : null}
       {renderRightContent && renderRightContent()}

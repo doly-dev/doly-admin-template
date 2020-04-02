@@ -2,10 +2,10 @@ import React, { useState, useMemo } from "react";
 import { Layout } from "antd";
 import { Redirect, Switch } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import Media from "react-media";
 import Header from "./Header";
 import HeaderRightContent from "./HeaderRightContent";
 import Footer from "./Footer";
-import Sider from "./Sider";
 import RouteContext from "./RouteContext";
 import SiderMenu from "~/components/SiderMenu";
 import { getRoutes, getPageTitle } from "./_utils";
@@ -14,20 +14,29 @@ import { getMenuData } from "~/utils/menu";
 
 import styles from "./BasicLayout.less";
 
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 
-export default function BasicLayout({
+function BasicLayout({
   title = "",
   logo = "", // logo图片
-  collapsible = false, // 是否可收起
+  collapsible = true, // 是否可收起
   copyright = `Copyright&nbsp;&nbsp;Doly 2020`, // 底部版权信息，String | ReactNode
   routes = [],
+  isMobile,
   ...restProps
 }) {
-  const [collapsed, setCollapsed] = useState(false); // 侧边栏当前收起状态
+  const [collapsed, setCollapsed] = useState(isMobile); // 侧边栏当前收起状态
   const menuData = useMemo(() => getMenuData(routerConfig.basic), []);
   const routeData = useMemo(() => getRoutes(routes, true), []);
   const pageTitle = getPageTitle({ routeData, ...restProps });
+
+  let rightLayoutStyle = {};
+
+  if (isMobile && collapsible) {
+    rightLayoutStyle = { marginLeft: 0 };
+  } else if (collapsed) {
+    rightLayoutStyle = { marginLeft: 80 };
+  }
 
   return (
     <>
@@ -42,26 +51,50 @@ export default function BasicLayout({
           menuData,
           routeData,
           title: pageTitle,
-          collapsed
+          collapsed,
+          isMobile
         }}
       >
         <Layout>
           <Header
             title={title}
             logo={logo}
-            defaultCollapsed={collapsed}
             collapsible={collapsible}
+            collapsed={collapsed}
             onTrigger={() => setCollapsed(c => !c)}
             renderRightContent={() => <HeaderRightContent />}
+            isMobile={isMobile}
           />
           <Layout>
-            <Sider collapsed={collapsed} collapsible={collapsible}>
-              <SiderMenu menuData={menuData} {...restProps} />
-            </Sider>
-            <Layout
-              className={styles.rightLayout}
-              style={collapsed ? { marginLeft: 80 } : {}}
-            >
+            {isMobile && collapsible ? (
+              <SiderMenu
+                menuData={menuData}
+                collapsed={collapsed}
+                {...restProps}
+                onCollapse={setCollapsed}
+                isMobile={isMobile}
+                collapsible={collapsible}
+              />
+            ) : (
+              <Sider
+                theme="light"
+                width={250}
+                collapsible={collapsible}
+                collapsed={collapsed}
+                trigger={null}
+                className={styles.sider}
+              >
+                <SiderMenu
+                  menuData={menuData}
+                  collapsed={collapsed}
+                  {...restProps}
+                  onCollapse={setCollapsed}
+                  isMobile={isMobile}
+                  collapsible={collapsible}
+                />
+              </Sider>
+            )}
+            <Layout className={styles.rightLayout} style={rightLayoutStyle}>
               <Content className={styles.content}>
                 <Switch>
                   {routeData}
@@ -76,3 +109,9 @@ export default function BasicLayout({
     </>
   );
 }
+
+export default props => (
+  <Media query={{ maxWidth: 599 }}>
+    {isMobile => <BasicLayout {...props} isMobile={isMobile} />}
+  </Media>
+);
