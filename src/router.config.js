@@ -18,10 +18,6 @@ export default {
   // 以下页面需要登录、权限，使用 BasicLayout 布局
   basic: [
     {
-      path: "/",
-      redirect: "/home"
-    },
-    {
       path: "home",
       name: "首页",
       icon: <HomeOutlined />,

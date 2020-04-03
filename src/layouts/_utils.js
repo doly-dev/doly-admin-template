@@ -119,3 +119,44 @@ export function getBreadcrumb(routeData, pathname) {
   const currRoute = getCurrentRoute(routeData, pathname);
   return currRoute.breakcrumb;
 }
+
+// 获取第一个菜单页面路由
+function getMenuFirstPath(menuData) {
+  let ret = "";
+  if (menuData && menuData.length > 0) {
+    menuData.some(item => {
+      if (item.children && item.children.length > 0) {
+        ret = getMenuFirstPath(item.children);
+      } else if (!isUrl(item.path)) {
+        ret = item.path;
+      }
+      return ret;
+    });
+  }
+  return ret;
+}
+
+// 获取默认重定向页面，如果指定路由 / 重定向或页面，则不设置；否则返回第一个菜单 path 作为重定向
+export function getDefautRedirect(routeData, menuData) {
+  let hasRootRedirect = false;
+  let view = null;
+
+  // 查找是否有 / 重定向
+  routeData.some(item => {
+    if (
+      (item.props.form === "/" && !!item.props.to) ||
+      item.props.path === "/"
+    ) {
+      hasRootRedirect = true;
+    }
+    return hasRootRedirect;
+  });
+
+  // 没有 / 路由配置，获取第一个菜单路由
+  if (!hasRootRedirect) {
+    const firstMenuPath = getMenuFirstPath(menuData);
+    view = <Redirect path="/" to={firstMenuPath} exact />;
+  }
+
+  return view;
+}

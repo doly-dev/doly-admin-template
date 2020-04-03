@@ -8,7 +8,7 @@ import HeaderRightContent from "./HeaderRightContent";
 import Footer from "./Footer";
 import RouteContext from "./RouteContext";
 import SiderMenu from "~/components/SiderMenu";
-import { getRoutes, getPageTitle } from "./_utils";
+import { getRoutes, getPageTitle, getDefautRedirect } from "./_utils";
 import routerConfig from "~/router.config";
 import { getMenuData } from "~/utils/menu";
 
@@ -29,7 +29,11 @@ function BasicLayout({
   const menuData = useMemo(() => getMenuData(routerConfig.basic), []);
   const routeData = useMemo(() => getRoutes(routes, true), []);
   const pageTitle = getPageTitle({ routeData, ...restProps });
-
+  const defaultRedirectView = useMemo(
+    () => getDefautRedirect(routeData, menuData),
+    []
+  ); // 获取 / 默认路由
+  console.log(defaultRedirectView);
   let rightLayoutStyle = {};
 
   if (isMobile && collapsible) {
@@ -97,6 +101,7 @@ function BasicLayout({
             <Layout className={styles.rightLayout} style={rightLayoutStyle}>
               <Content className={styles.content}>
                 <Switch>
+                  {defaultRedirectView}
                   {routeData}
                   <Redirect to="/exception/404" />
                 </Switch>
