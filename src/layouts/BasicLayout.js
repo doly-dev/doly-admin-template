@@ -28,7 +28,7 @@ function BasicLayout({
   const [collapsed, setCollapsed] = useState(isMobile); // 侧边栏当前收起状态
   const menuData = useMemo(() => getMenuData(routerConfig.basic), []);
   const routeData = useMemo(() => getRoutes(routes, true), []);
-  const pageTitle = getPageTitle({ routeData, ...restProps });
+  const pageTitle = getPageTitle({ routeData, title, ...restProps });
   const defaultRedirectView = useMemo(
     () => getDefautRedirect(routeData, menuData),
     []
@@ -45,7 +45,7 @@ function BasicLayout({
   return (
     <>
       <Helmet>
-        <title>{pageTitle ? `${pageTitle} - ${title}` : title}</title>
+        <title>{pageTitle}</title>
       </Helmet>
       <RouteContext.Provider
         value={{

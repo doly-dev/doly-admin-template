@@ -8,12 +8,12 @@ import styles from "./BlankLayout.less";
 
 export default function BlankLayout({ routes, title, logo, ...restProps }) {
   const routeData = useMemo(() => getRoutes(routes, true), []);
-  const pageTitle = getPageTitle({ routeData, ...restProps });
+  const pageTitle = getPageTitle({ routeData, title, ...restProps });
 
   return (
     <>
       <Helmet>
-        <title>{pageTitle ? `${pageTitle} - ${title}` : title}</title>
+        <title>{pageTitle}</title>
       </Helmet>
       <Header title={title} logo={logo} className={styles.header} />
       <Switch>
