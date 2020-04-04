@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { Layout } from "antd";
 import { Redirect, Switch } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 import Media from "react-media";
 import Header from "./Header";
 import HeaderRightContent from "./HeaderRightContent";
@@ -33,7 +33,7 @@ function BasicLayout({
     () => getDefautRedirect(routeData, menuData),
     []
   ); // 获取 / 默认路由
-  console.log(defaultRedirectView);
+
   let rightLayoutStyle = {};
 
   if (isMobile && collapsible) {
@@ -44,11 +44,9 @@ function BasicLayout({
 
   return (
     <>
-      <HelmetProvider>
-        <Helmet>
-          <title>{pageTitle ? `${pageTitle} - ${title}` : title}</title>
-        </Helmet>
-      </HelmetProvider>
+      <Helmet>
+        <title>{pageTitle ? `${pageTitle} - ${title}` : title}</title>
+      </Helmet>
       <RouteContext.Provider
         value={{
           ...restProps,

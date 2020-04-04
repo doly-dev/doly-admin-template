@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { Card, Form, Input, Button } from "antd";
-import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useAsync } from "rc-hooks";
 import services from "~/services";
 import { setLoginInfo, isLogin } from "~/utils/login";
@@ -61,7 +61,7 @@ export default ({ history }) => {
               ]}
             >
               <Input
-                prefix={<MailOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+                prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
                 placeholder="用户名"
                 size="large"
                 autoComplete="off"

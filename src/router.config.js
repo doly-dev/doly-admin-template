@@ -137,7 +137,7 @@ export default {
         },
         {
           path: "login",
-          name: "登录页",
+          name: "登录",
           component: Login
         }
       ]

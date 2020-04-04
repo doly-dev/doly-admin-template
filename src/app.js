@@ -6,6 +6,7 @@ import { ConfigProvider } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
 import { Router, Route, Redirect, Switch } from "react-router-dom";
 import { syncHistory } from "router-store";
+import { HelmetProvider } from "react-helmet-async";
 import { isLogin } from "~/utils/login";
 import BasicLayout from "~/layouts/BasicLayout";
 import BlankLayout from "~/layouts/BlankLayout";
@@ -31,39 +32,41 @@ const history = syncHistory();
 
 function App() {
   return (
-    <ConfigProvider locale={zhCN}>
-      <Router history={history}>
-        <Switch>
-          <Route
-            path="/user"
-            render={props => (
-              <BlankLayout
-                routes={routerConfig.blank}
-                {...layoutConfig}
-                {...props}
-              />
-            )}
-          />
-          <Route
-            path="/"
-            render={props =>
-              // 这里如果和login页面同时使用 hook，可能存在函数闭包缓存问题。
-              // 如果使用context也行，但用处不大。
-              // 在登录页面完成登录和权限获取
-              isLogin() ? (
-                <BasicLayout
-                  routes={routerConfig.basic}
+    <HelmetProvider>
+      <ConfigProvider locale={zhCN}>
+        <Router history={history}>
+          <Switch>
+            <Route
+              path="/user"
+              render={props => (
+                <BlankLayout
+                  routes={routerConfig.blank}
                   {...layoutConfig}
                   {...props}
                 />
-              ) : (
-                <Redirect to="/user" />
-              )
-            }
-          />
-        </Switch>
-      </Router>
-    </ConfigProvider>
+              )}
+            />
+            <Route
+              path="/"
+              render={props =>
+                // 这里如果和login页面同时使用 hook，可能存在函数闭包缓存问题。
+                // 如果使用context也行，但用处不大。
+                // 在登录页面完成登录和权限获取
+                isLogin() ? (
+                  <BasicLayout
+                    routes={routerConfig.basic}
+                    {...layoutConfig}
+                    {...props}
+                  />
+                ) : (
+                  <Redirect to="/user" />
+                )
+              }
+            />
+          </Switch>
+        </Router>
+      </ConfigProvider>
+    </HelmetProvider>
   );
 }
 

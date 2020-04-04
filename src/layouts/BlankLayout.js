@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Redirect, Switch } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 import Header from "./Header";
 import { getRoutes, getPageTitle } from "./_utils";
 
@@ -12,11 +12,9 @@ export default function BlankLayout({ routes, title, logo, ...restProps }) {
 
   return (
     <>
-      <HelmetProvider>
-        <Helmet>
-          <title>{pageTitle}</title>
-        </Helmet>
-      </HelmetProvider>
+      <Helmet>
+        <title>{pageTitle ? `${pageTitle} - ${title}` : title}</title>
+      </Helmet>
       <Header title={title} logo={logo} className={styles.header} />
       <Switch>
         {routeData}
