@@ -104,14 +104,14 @@ export function getCurrentRoute(routeData, pathname) {
 
 // 获取页面标题
 // 这里如果根据菜单获取标题会有问题，比如有些详情页的菜单是隐藏。
-export function getPageTitle({ routeData, title, location }) {
+export function getPageTitle({ routeData, location }) {
   const { pathname } = location;
-  let pageTitle = "";
+  let title = "";
   const currRoute = getCurrentRoute(routeData, pathname);
   if (currRoute && currRoute.name) {
-    pageTitle = currRoute.name;
+    title = currRoute.name;
   }
-  return pageTitle ? `${pageTitle} - ${title}` : title;
+  return title;
 }
 
 // 获取面包屑数据
