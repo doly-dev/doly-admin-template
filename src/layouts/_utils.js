@@ -15,7 +15,12 @@ function formatPath(path, parentPath = "/") {
 }
 
 // 格式化路由，处理path和breakcrumb
-function formatter(data = [], parentPath = "/", breakcrumb = []) {
+function formatter(
+  data = [],
+  parentPath = "/",
+  breakcrumb = [],
+  parentAuthority
+) {
   let ret = [];
 
   data.forEach(item => {
@@ -29,7 +34,7 @@ function formatter(data = [], parentPath = "/", breakcrumb = []) {
 
     if (item.routes) {
       ret = ret.concat(
-        formatter(item.routes, `${pathFmt}/`, currentBreakcrumb)
+        formatter(item.routes, `${pathFmt}/`, currentBreakcrumb, item.authority)
       );
     } else {
       const result = {
@@ -40,6 +45,10 @@ function formatter(data = [], parentPath = "/", breakcrumb = []) {
 
       if (item.redirect) {
         result.redirect = formatPath(item.redirect, parentPath);
+      }
+
+      if (!item.authority && parentAuthority) {
+        result.authority = parentAuthority;
       }
 
       ret.push(result);

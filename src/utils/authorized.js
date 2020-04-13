@@ -89,9 +89,6 @@ export function checkAuthorized(authority) {
     }
   }
 
-  // eslint-disable-next-line
-  console.warn("unsupported parameters");
-
   // 不支持的参数，统一返回false
   return false;
 }
