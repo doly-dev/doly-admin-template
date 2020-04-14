@@ -34,7 +34,12 @@ function formatter(
 
     if (item.routes) {
       ret = ret.concat(
-        formatter(item.routes, `${pathFmt}/`, currentBreakcrumb, item.authority)
+        formatter(
+          item.routes,
+          `${pathFmt}/`,
+          currentBreakcrumb,
+          item.authority || parentAuthority
+        )
       );
     } else {
       const result = {
