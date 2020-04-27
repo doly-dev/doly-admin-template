@@ -28,6 +28,7 @@
     "classnames": "^2.2.6",
     "core-js": "^3.6.4",
     "path-to-regexp": "^2.4.0",
+    "qs": "^6.9.3",
     "rc-hooks": "^0.5.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

@@ -1,16 +1,15 @@
 module.exports = {
-  "POST /api/login": (req, res) => {
+  login: req => {
     const username = req.body.username || "测试用户";
     const token = new Date().getTime();
     // console.log(req.body);
-    res.send({
-      errCode: "00",
-      errMsg: "",
+    return {
+      errMsg: "test",
       data: {
         username,
         token,
         currentAuthority: ["user"]
       }
-    });
+    };
   }
 };
