@@ -3,11 +3,7 @@ const pkg = require("./package.json");
 
 module.exports = {
   entry: {
-    [pkg.name]: [
-      "./node_modules/core-js/stable",
-      "./node_modules/regenerator-runtime/runtime",
-      "./src/app.js"
-    ]
+    [pkg.name]: ["./src/utils/polyfill", "./src/app.js"]
   },
   html: {
     template: "src/document.ejs",
@@ -28,6 +24,11 @@ module.exports = {
     API_URL: "",
     DEV: true
   },
+
+  // 用于本地开发调试低端设备，关闭HotModuleRepleace
+  // devServer: {
+  //   hot: false
+  // },
 
   // 扩展babel plugin
   extraBabelPlugins: [

@@ -27,9 +27,7 @@ export default ({ history }) => {
   }, []);
 
   const onFinish = useCallback(values => {
-    run({
-      data: values
-    });
+    run(values);
   }, []);
 
   return isLogin() ? null : (
