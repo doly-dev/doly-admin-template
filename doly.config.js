@@ -2,6 +2,13 @@ const path = require("path");
 const pkg = require("./package.json");
 
 module.exports = {
+  entry: {
+    [pkg.name]: [
+      "./node_modules/core-js/stable",
+      "./node_modules/regenerator-runtime/runtime",
+      "./src/app.js"
+    ]
+  },
   html: {
     template: "src/document.ejs",
     filename: "index.html"
