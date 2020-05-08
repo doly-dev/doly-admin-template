@@ -1,17 +1,17 @@
-const memoryData = {};
-const memoryStorage = {
+const cacheData = {};
+const cache = {
   // eslint-disable-next-line
   getItem: function(key) {
-    return memoryData[key];
+    return cacheData[key];
   },
   // eslint-disable-next-line
   setItem: function(key, data) {
-    memoryData[key] = data;
+    cacheData[key] = data;
   },
   // eslint-disable-next-line
   removeItem: function(key) {
-    const ret = memoryData[key];
-    delete memoryData[key];
+    const ret = cacheData[key];
+    delete cacheData[key];
     return ret;
   }
 };
@@ -23,13 +23,12 @@ const setStorage = storage => {
     }
     return window.localStorage;
   } catch (err) {
-    // eslint-disable-next-line
     console.warn(err);
     if (typeof window !== "undefined") {
       return window.localStorage;
     }
   }
-  return memoryStorage;
+  return cache;
 };
 
 class Storage {

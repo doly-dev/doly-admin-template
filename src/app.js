@@ -48,7 +48,7 @@ function App() {
               path="/"
               render={props =>
                 // 这里如果和login页面同时使用 hook，可能存在函数闭包缓存问题。
-                // 如果使用context也行，但用处不大。
+                // 如果使用context也行。
                 // 在登录页面完成登录和权限获取
                 isLogin() ? (
                   <BasicLayout
