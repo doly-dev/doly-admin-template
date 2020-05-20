@@ -20,6 +20,7 @@ function BasicLayout({
   title = "",
   logo = "", // logo图片
   collapsible = true, // 是否可收起
+  theme = "light",
   copyright = `Copyright&nbsp;&nbsp;Doly 2020`, // 底部版权信息，String | ReactNode
   routes = [],
   isMobile,
@@ -70,6 +71,7 @@ function BasicLayout({
           <Layout>
             {isMobile && collapsible ? (
               <SiderMenu
+                theme={theme}
                 menuData={menuData}
                 collapsed={collapsed}
                 {...restProps}
@@ -79,7 +81,7 @@ function BasicLayout({
               />
             ) : (
               <Sider
-                theme="light"
+                theme={theme}
                 width={250}
                 collapsible={collapsible}
                 collapsed={collapsed}
@@ -87,6 +89,7 @@ function BasicLayout({
                 className={styles.sider}
               >
                 <SiderMenu
+                  theme={theme}
                   menuData={menuData}
                   collapsed={collapsed}
                   {...restProps}

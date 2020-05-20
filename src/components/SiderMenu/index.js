@@ -16,6 +16,7 @@ const SiderMenuWrapper = React.memo(props => {
         padding: 0,
         height: "100vh"
       }}
+      drawerStyle={props.theme === "dark" ? { background: "#001529" } : {}}
     >
       <SiderMenu
         {...props}

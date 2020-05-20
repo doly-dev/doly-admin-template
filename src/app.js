@@ -22,7 +22,8 @@ import piclogo from "~/assets/images/logo@2x.png";
 // layout config
 const layoutConfig = {
   logo: piclogo,
-  title: "Doly Admin"
+  title: "Doly Admin",
+  theme: "light" // light or dark
 };
 
 // 同步history
@@ -57,7 +58,7 @@ function App() {
                     {...props}
                   />
                 ) : (
-                  <Redirect to="/user" />
+                  <Redirect to="/user/login" />
                 )
               }
             />
