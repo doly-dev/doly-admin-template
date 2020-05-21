@@ -13,6 +13,7 @@
 ├── src
 │   ├── assets               # 静态资源，如图片、样式、字体等
 │   ├── components           # 组件
+│   ├── models               # 数据模型
 │   ├── pages                # 页面
 │   ├── services             # 后台接口服务
 │   ├── utils                # 工具

@@ -2,35 +2,30 @@ import React, { useEffect, useCallback } from "react";
 import { Card, Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useAsync } from "rc-hooks";
+import { observer } from "mobx-react-lite";
 import services from "~/services";
-import { setLoginInfo, isLogin } from "~/utils/login";
-import { setAuthorized } from "~/utils/authorized";
 
 import styles from "./style.less";
+import { user } from "~/models/user";
 
 const FormItem = Form.Item;
 
-export default ({ history }) => {
-  const { run, loading } = useAsync(services.login, {
-    autoRun: false,
-    onSuccess: res => {
-      setLoginInfo(res.data); // 缓存登录信息
-      setAuthorized(res.data.currentAuthority); // 缓存权限
-      history.push("/");
-    }
-  });
-
-  useEffect(() => {
-    if (isLogin()) {
-      history.push("/");
-    }
-  }, []);
+export default observer(({ history }) => {
+  const { run, loading } = useAsync(services.login, { autoRun: false });
 
   const onFinish = useCallback(values => {
-    run(values);
+    run(values).then(res => {
+      user.login(res.data);
+    });
   }, []);
 
-  return isLogin() ? null : (
+  useEffect(() => {
+    if (user.isLogin) {
+      history.push("/");
+    }
+  }, [user.isLogin]);
+
+  return user.isLogin ? null : (
     <div className={styles.container}>
       <div className={styles.loginbox}>
         <Card
@@ -102,4 +97,4 @@ export default ({ history }) => {
       <div className={styles.bg} />
     </div>
   );
-};
+});
