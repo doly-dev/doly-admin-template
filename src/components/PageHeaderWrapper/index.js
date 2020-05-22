@@ -1,14 +1,22 @@
 import React, { useContext } from "react";
 import { PageHeader } from "antd";
+import { Link } from "react-router-dom";
 import RouteContext from "~/layouts/RouteContext";
 import { getBreadcrumb } from "~/layouts/_utils";
 
 import styles from "./style.less";
 
-// 自定义渲染，父级路由没有页面功能
-function itemRender(route) {
-  return <span>{route.breadcrumbName}</span>;
-}
+// 渲染Breadcrumb 子节点
+// Render the Breadcrumb child node
+const itemRender = (route, params, routes) => {
+  const last = routes.indexOf(route) === routes.length - 1;
+
+  return last || !route.component ? (
+    <span>{route.breadcrumbName}</span>
+  ) : (
+    <Link to={route.path}>{route.breadcrumbName}</Link>
+  );
+};
 
 export default function PageHeaderWrapper({ children, ...restProps }) {
   const { location, flatMenuMap, title } = useContext(RouteContext);

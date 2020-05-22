@@ -150,11 +150,12 @@ export function getBreadcrumb(flatMenuMap, pathname) {
   const extraBreadcrumbItems = pathSnippets
     .map(url => {
       const currentBreadcrumb = getCurrentBreadcrumb(flatMenuMap, url) || {};
-      const { hideInBreadcrumb, name } = currentBreadcrumb;
+      const { hideInBreadcrumb, name, children } = currentBreadcrumb;
       return name && !hideInBreadcrumb
         ? {
             path: url,
-            breadcrumbName: name
+            breadcrumbName: name,
+            component: !children
           }
         : null;
     })
