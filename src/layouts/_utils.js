@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import pathToRegexp from "path-to-regexp";
 import { isUrl } from "util-helpers";
 import AuthorizedRoute from "~/components/AuthorizedRoute";
+import { urlToList } from "~/utils/pathTools";
 
 // 格式化路由path
 function formatPath(path, parentPath = "/") {
@@ -18,33 +19,33 @@ function formatPath(path, parentPath = "/") {
 function formatter(
   data = [],
   parentPath = "/",
-  breakcrumb = [],
+  // breakcrumb = [],
   parentAuthority
 ) {
   let ret = [];
 
   data.forEach(item => {
     const pathFmt = formatPath(item.path, parentPath);
-    const currentBreakcrumb = breakcrumb.slice();
+    // const currentBreakcrumb = breakcrumb.slice();
 
-    currentBreakcrumb.push({
-      path: item.path,
-      breadcrumbName: item.name || ""
-    });
+    // currentBreakcrumb.push({
+    //   path: item.path,
+    //   breadcrumbName: item.name || ""
+    // });
 
     if (item.routes) {
       ret = ret.concat(
         formatter(
           item.routes,
           `${pathFmt}/`,
-          currentBreakcrumb,
+          // currentBreakcrumb,
           item.authority || parentAuthority
         )
       );
     } else {
       const result = {
         ...item,
-        breakcrumb: currentBreakcrumb,
+        // breakcrumb: currentBreakcrumb,
         path: pathFmt
       };
 
@@ -129,9 +130,44 @@ export function getPageTitle({ routeData, location }) {
 }
 
 // 获取面包屑数据
-export function getBreadcrumb(routeData, pathname) {
-  const currRoute = getCurrentRoute(routeData, pathname);
-  return currRoute.breakcrumb;
+// export function getBreadcrumb(routeData, pathname) {
+//   const currRoute = getCurrentRoute(routeData, pathname);
+//   return currRoute.breakcrumb;
+// }
+function getCurrentBreadcrumb(flatMenuMap, url) {
+  let breadcrumb = flatMenuMap[url];
+  if (!breadcrumb) {
+    Object.keys(flatMenuMap).forEach(item => {
+      if (pathToRegexp(item).test(url)) {
+        breadcrumb = flatMenuMap[item];
+      }
+    });
+  }
+  return breadcrumb;
+}
+export function getBreadcrumb(flatMenuMap, pathname) {
+  const pathSnippets = urlToList(pathname);
+  const extraBreadcrumbItems = pathSnippets
+    .map(url => {
+      const currentBreadcrumb = getCurrentBreadcrumb(flatMenuMap, url) || {};
+      const { hideInBreadcrumb, name } = currentBreadcrumb;
+      return name && !hideInBreadcrumb
+        ? {
+            path: url,
+            breadcrumbName: name
+          }
+        : null;
+    })
+    .filter(item => item !== null);
+  // // Add home breadcrumbs to your head if defined
+  // if (home) {
+  //   extraBreadcrumbItems.unshift({
+  //     path: '/',
+  //     breadcrumbName: home,
+  //   });
+  // }
+
+  return extraBreadcrumbItems;
 }
 
 // 获取第一个菜单页面路由

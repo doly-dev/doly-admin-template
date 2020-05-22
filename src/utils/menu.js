@@ -28,6 +28,26 @@ function formatter(data = [], parentPath = "/") {
     .filter(item => !!item);
 }
 
+function getFlatMenuMap(menuData) {
+  const routerMap = {};
+
+  function flattemMenu(data) {
+    data.forEach(menuItem => {
+      if (menuItem.children) {
+        flattemMenu(menuItem.children);
+      }
+      routerMap[menuItem.path] = menuItem;
+    });
+  }
+  flattemMenu(menuData);
+  return routerMap;
+}
+
 export function getMenuData(routes) {
-  return formatter(routes);
+  const menuData = formatter(routes);
+  const flatMenuMap = getFlatMenuMap(menuData);
+  return {
+    menuData,
+    flatMenuMap
+  };
 }

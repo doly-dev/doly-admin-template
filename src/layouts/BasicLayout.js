@@ -27,7 +27,10 @@ function BasicLayout({
   ...restProps
 }) {
   const [collapsed, setCollapsed] = useState(isMobile); // 侧边栏当前收起状态
-  const menuData = useMemo(() => getMenuData(routerConfig.basic), []);
+  const { menuData, flatMenuMap } = useMemo(
+    () => getMenuData(routerConfig.basic),
+    []
+  );
   const routeData = useMemo(() => getRoutes(routes, true), []);
   const pageTitle = getPageTitle({ routeData, ...restProps });
   const defaultRedirectView = useMemo(
@@ -52,6 +55,7 @@ function BasicLayout({
         value={{
           ...restProps,
           menuData,
+          flatMenuMap,
           routeData,
           title: pageTitle,
           collapsed,

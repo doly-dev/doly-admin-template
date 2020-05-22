@@ -11,8 +11,9 @@ function itemRender(route) {
 }
 
 export default function PageHeaderWrapper({ children, ...restProps }) {
-  const { location, routeData, title } = useContext(RouteContext);
-  const routes = getBreadcrumb(routeData, location.pathname);
+  const { location, flatMenuMap, title } = useContext(RouteContext);
+  const routes = getBreadcrumb(flatMenuMap, location.pathname);
+
   const breadcrumb =
     routes.length > 1
       ? {

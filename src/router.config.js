@@ -65,6 +65,12 @@ export default {
       ]
     },
     {
+      path: "/single/one/detail", // 用于演示部分详情页的面包屑
+      name: "OneDetail",
+      component: Welcome,
+      hideInMenu: true
+    },
+    {
       path: "multiple",
       name: "多层级",
       routes: [

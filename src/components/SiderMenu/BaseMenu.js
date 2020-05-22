@@ -4,7 +4,7 @@ import { Menu } from "antd";
 import Icon from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { isUrl } from "util-helpers";
-import { urlToList } from "./_utils";
+import { urlToList } from "~/utils/pathTools";
 import { getMenuMatches } from "./SiderMenuUtils";
 import styles from "./index.less";
 
