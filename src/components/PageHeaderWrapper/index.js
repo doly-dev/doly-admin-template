@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { PageHeader } from "antd";
 import { Link } from "react-router-dom";
 import RouteContext from "~/layouts/RouteContext";
-import { getBreadcrumb } from "~/layouts/_utils";
+import { getBreadcrumb, getCurrentRoute } from "~/layouts/_utils";
 
 import styles from "./style.less";
 
@@ -18,24 +18,29 @@ const itemRender = (route, params, routes) => {
   );
 };
 
-export default function PageHeaderWrapper({ children, ...restProps }) {
-  const { location, flatMenuMap, title } = useContext(RouteContext);
-  const routes = getBreadcrumb(flatMenuMap, location.pathname);
+const conversionBreadcrumbList = (flatMenuMap, pathname) => {
+  const routes = getBreadcrumb(flatMenuMap, pathname);
+  return routes.length > 1
+    ? {
+        routes,
+        itemRender
+      }
+    : {};
+};
 
-  const breadcrumb =
-    routes.length > 1
-      ? {
-          routes,
-          itemRender
-        }
-      : {};
+export default function PageHeaderWrapper({ children, ...restProps }) {
+  const { location, flatMenuMap, title, routeData } = useContext(RouteContext);
+  const route = getCurrentRoute(routeData, location.pathname);
 
   return (
     <div className={styles.wrapper}>
       <PageHeader
         ghost={false}
         title={title}
-        breadcrumb={breadcrumb}
+        breadcrumb={
+          !route.hideInBreadcrumb &&
+          conversionBreadcrumbList(flatMenuMap, location.pathname)
+        }
         {...restProps}
       />
       <div className={styles.content}>{children}</div>
