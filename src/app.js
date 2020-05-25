@@ -3,6 +3,8 @@ import React from "react";
 import ReactDom from "react-dom";
 import { ConfigProvider } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
+import "moment";
+import "moment/locale/zh-cn";
 import { Router, Route, Redirect, Switch } from "react-router-dom";
 import { syncHistory } from "router-store";
 import { HelmetProvider } from "react-helmet-async";
