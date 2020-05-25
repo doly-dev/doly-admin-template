@@ -121,7 +121,7 @@ function BasicLayout({
 }
 
 export default props => (
-  <Media query={{ maxWidth: 599 }}>
+  <Media query={{ maxWidth: 768 }}>
     {isMobile => <BasicLayout {...props} isMobile={isMobile} />}
   </Media>
 );
