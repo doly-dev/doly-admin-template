@@ -176,9 +176,9 @@ function getMenuFirstPath(menuData) {
   let ret = "";
   if (menuData && menuData.length > 0) {
     menuData.some(item => {
-      if (item.children && item.children.length > 0) {
+      if (item.children && item.children.length > 0 && !item.hideInMenu) {
         ret = getMenuFirstPath(item.children);
-      } else if (!isUrl(item.path)) {
+      } else if (!isUrl(item.path) && item.component && !item.hideInMenu) {
         ret = item.path;
       }
       return ret;
