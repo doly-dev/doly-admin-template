@@ -23,6 +23,7 @@ const setStorage = storage => {
     }
     return window.localStorage;
   } catch (err) {
+    // eslint-disable-next-line
     console.warn(err);
     if (typeof window !== "undefined") {
       return window.localStorage;
