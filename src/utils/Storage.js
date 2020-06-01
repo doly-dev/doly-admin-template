@@ -18,7 +18,7 @@ const cache = {
 
 const setStorage = storage => {
   try {
-    if (storage.getItem && storage.setItem && storage.removeItem) {
+    if (storage && storage.getItem && storage.setItem && storage.removeItem) {
       return storage;
     }
     return window.localStorage;
