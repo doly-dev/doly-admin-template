@@ -40,6 +40,11 @@ module.exports = {
     DEV: true
   },
 
+  // 配置 antd 主题
+  // theme: {
+  //   "primary-color": "red"
+  // },
+
   // 用于本地开发调试低端设备，关闭HotModuleRepleace
   // devServer: {
   //   hot: false
@@ -52,7 +57,7 @@ module.exports = {
       {
         libraryName: "antd",
         libraryDirectory: "es",
-        style: "css" // `style: true` 会加载 less 文件
+        style: true // `style: true` 会加载 less 文件
       }
     ],
     [
