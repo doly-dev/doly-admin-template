@@ -85,7 +85,16 @@ module.exports = {
       publicPath: "/", // 静态资源基础域名路径，如 https://img.99bill.com/
       html: {
         template: "src/document.ejs",
-        filename: "seashell/webapp/product/project/index.html" // 构建后的html路径，如 seashell/webapp/x-project/agent/index.html
+        filename: "seashell/webapp/product/project/index.html", // 构建后的html路径，如 seashell/webapp/x-project/agent/index.html
+        minify: {
+          minifyCSS: true,
+          collapseWhitespace: true,
+          removeComments: true,
+          removeRedundantAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          useShortDoctype: true
+        }
       },
       outputFilename: "res/j/[name].[chunkhash:8].js", // js入口构建后路径
       outputChunkFilename: "res/j/[name].[chunkhash:8].chunk.js", // js块构建后路径
