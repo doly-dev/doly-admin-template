@@ -1,3 +1,4 @@
+import "./global.less";
 import "mobx-react-lite/batchingForReactDom";
 import React from "react";
 import ReactDom from "react-dom";
