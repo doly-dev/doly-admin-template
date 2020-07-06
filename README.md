@@ -87,9 +87,9 @@ npm run build
 
 ## 动态主题
 
-### 明暗风格
+### 亮暗风格
 
-支持 `明/暗` 两种风格，可通过 `aap.js` 中的变量 `dolyLayout.theme` 进行配置。
+支持 `亮/暗` 两种风格，可通过 `aap.js` 中的变量 `dolyLayout.theme` 进行配置。
 
 ### antd 主题切换
 
@@ -135,6 +135,6 @@ env: {
 }
 ```
 
-关于 `doly` 不同环境配置，请参照：[doly配置](https://github.com/doly-dev/doly-cli#%E4%B8%8D%E5%90%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE)
+关于 `doly` 不同环境配置，可参照：[doly配置](https://github.com/doly-dev/doly-cli#%E4%B8%8D%E5%90%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE)
 
 
