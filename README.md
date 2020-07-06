@@ -70,7 +70,7 @@ npm run build
 - `路由管理` 通过约定的语法根据在 `router.config.js` 中配置路由。
 - `菜单生成` 根据路由配置来生成菜单。菜单项名称，嵌套路径与路由高度耦合。
 - `面包屑` 组件 `PageHeaderWrapper` 中内置的面包屑，也可通过 `RouteContext` 提供的信息自定义生成。
-- `权限` 在用户登录后，将权限更新到 `utils/authorited` 模块，会自动应用到路由和菜单。
+- `权限` 在用户登录后，将权限更新到 `utils/authorited` 模块，会自动应用到路由和菜单。
 
 ### 路由配置
 
@@ -79,7 +79,7 @@ npm run build
 - `BasicLayout` 包含头部、侧边菜单、面包屑，一般用于登录后的内容页面展示。
 - `BlankLayout` 一般用于登录、忘记密码、首次登录修改密码等无需菜单、面包屑的页面。
 
-目前脚手架中所有的路由都通过 `router.config.js` 配置，其中一些参数，如 `name` `icon` `hideChildrenInMenu` `authority` `routes`，是用来辅助生成菜单。其中：
+目前脚手架中所有的路由都通过 `router.config.js` 配置，其中一些参数，如 `name` `icon` `hideInMenu` `authority` `routes`，是用来辅助生成菜单。其中：
 
 - `name` 和 `icon` 分别代表生成菜单项的文本和图标。
 - `hideInMenu` 在菜单中不展示这个路由/子路由。
@@ -93,7 +93,7 @@ npm run build
 
 ### antd 主题切换
 
-支持在 `doly` 的配置文件 `doly.config.js` 中的设置 `theme`，支持对象和文件路径字符串：
+支持在 `doly` 的配置文件 `doly.config.js` 中的设置 `theme`，支持对象或文件路径：
 
 ```javascript
 theme: {
