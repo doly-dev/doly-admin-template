@@ -6,7 +6,6 @@ export default function AuthorizedRoute({
   component: Component,
   render,
   authority,
-  redirectPath,
   ...rest
 }) {
   if (!checkAuthorized(authority)) {
