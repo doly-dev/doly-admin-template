@@ -1,4 +1,4 @@
-import { types } from "mobx-state-tree";
+import { action, computed, observable } from "mobx";
 import { routerHistory } from "router-store";
 import Storage from "~/utils/Storage";
 import { setAuthorized, removeAuthorized } from "~/utils/authorized";
@@ -7,51 +7,45 @@ const storageKey = "__login_info__";
 
 const loginStorage = new Storage(storageKey, window.sessionStorage);
 
-// 初始用户信息
-const initUserInfo = {
-  token: "",
-  username: ""
-};
+class User {
+  @observable token = ""; // 登录标识
 
-const User = types
-  .model({
-    token: types.optional(types.string, ""),
-    username: types.optional(types.string, "")
-  })
-  .views(self => ({
-    get isLogin() {
-      return !!self.token;
-    },
-    get loginToken() {
-      // 可在 services/request 中直接使用
-      return self.token;
-    }
-  }))
-  .actions(self => ({
-    // 更新数据
-    update(data) {
-      for (const prop in data) {
-        if (Object.prototype.hasOwnProperty.call(data, prop)) {
-          self[prop] = data[prop];
-        }
-      }
-    },
+  @observable username = ""; // 用户信息
 
-    // 登录成功
-    login(data) {
-      loginStorage.set(data); // 缓存本地
-      setAuthorized(data.currentAuthority); // 设置权限
-      self.update(data);
-    },
+  constructor(userData) {
+    this.update(userData);
+  }
 
-    // 退出登录
-    logout() {
-      loginStorage.remove(); // 删除本地缓存
-      removeAuthorized(); // 删除权限
-      self.update(initUserInfo); // 重置用户信息
-      routerHistory.push("/user/login");
-    }
-  }));
+  @computed get logined() {
+    return !!this.token;
+  }
+
+  @computed get loginToken() {
+    return this.token;
+  }
+
+  // 登录后更新用户数据
+  @action update(data = {}) {
+    const { username, token, currentAuthority } = data || {};
+
+    loginStorage.set(data); // 缓存本地缓存
+    setAuthorized(currentAuthority); // 设置权限
+
+    this.username = username;
+    this.token = token;
+  }
+
+  // 退出登录销毁用户数据
+  @action destory() {
+    loginStorage.remove(); // 删除本地缓存
+    removeAuthorized(); // 删除权限
+
+    this.username = "";
+    this.token = "";
+
+    routerHistory.push("/user/login");
+  }
+}
 
 // // 用于示例演示
 // loginStorage.set({
@@ -60,6 +54,6 @@ const User = types
 //   currentAuthority: ["user"]
 // });
 
-export const user = User.create(loginStorage.get() || initUserInfo);
+export const user = new User(loginStorage.get());
 
 export default User;

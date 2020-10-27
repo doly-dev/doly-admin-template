@@ -15,17 +15,17 @@ export default observer(({ history }) => {
 
   const onFinish = useCallback(values => {
     run(values).then(res => {
-      user.login(res.data);
+      user.update(res.data);
     });
   }, []);
 
   useEffect(() => {
-    if (user.isLogin) {
+    if (user.logined) {
       history.push("/");
     }
-  }, [user.isLogin]);
+  }, [user.logined]);
 
-  return user.isLogin ? null : (
+  return user.logined ? null : (
     <div className={styles.container}>
       <div className={styles.loginbox}>
         <Card

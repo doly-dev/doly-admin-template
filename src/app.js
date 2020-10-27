@@ -7,7 +7,8 @@ import zhCN from "antd/es/locale/zh_CN";
 import "moment";
 import "moment/locale/zh-cn";
 import { Router, Route, Redirect, Switch } from "react-router-dom";
-import { syncHistory } from "router-store";
+import { createHashHistory } from "history";
+import { syncRouterHistory } from "router-store";
 import { HelmetProvider } from "react-helmet-async";
 import { observer } from "mobx-react-lite";
 import BasicLayout from "~/layouts/BasicLayout";
@@ -25,14 +26,16 @@ const layoutConfig = {
   theme: "light" // light or dark
 };
 
+const hashHistory = createHashHistory();
+
 // 同步history
-const history = syncHistory();
+syncRouterHistory(hashHistory);
 
 const App = observer(() => {
   return (
     <HelmetProvider>
       <ConfigProvider locale={zhCN}>
-        <Router history={history}>
+        <Router history={hashHistory}>
           <Switch>
             <Route
               path="/user"
@@ -47,7 +50,7 @@ const App = observer(() => {
             <Route
               path="/"
               render={props =>
-                user.isLogin ? (
+                user.logined ? (
                   <BasicLayout
                     routes={routerConfig.basic}
                     {...layoutConfig}

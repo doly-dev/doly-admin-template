@@ -8,7 +8,7 @@ import { user } from "~/models/user";
 
 function HeaderRightContent() {
   const handleLogout = useCallback(() => {
-    user.logout();
+    user.destory();
     message.success("退出成功");
   }, []);
 

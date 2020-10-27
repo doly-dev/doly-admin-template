@@ -166,7 +166,7 @@ export default function request({
   };
 
   if (needToken) {
-    dataHeader.Authorization = getLoginToken();
+    dataHeader.Authorization = user.loginToken;
   }
 
   return axios({
